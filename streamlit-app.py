@@ -142,7 +142,9 @@ dataset_choice = st.selectbox(
 )
 
 #Sidebar 
-st.sidebar.header("App") 
+st.sidebar.header("App")
+st.sidebar.header("Datasets")
+st.sidebar.header("Import Data")
 
 # Import Data Section (For Display)
 st.sidebar.header("Upload Dataset File")
