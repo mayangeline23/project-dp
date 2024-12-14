@@ -135,6 +135,12 @@ st.markdown("""
 # Streamlit App
 st.title("Health Disease Prediction🩺")
 
+# Dataset selection below the title
+dataset_choice = st.selectbox(
+    "Choose a dataset to explore:",
+    ["Select", "Heart Disease", "Chronic Kidney Disease", "Diabetes", "Breast Cancer", "Liver Disorders"]
+)
+
 # Sidebar
 st.sidebar.header("App") 
 st.sidebar.selectbox("Dataset", ["Select", "Heart Disease", "Diabetes", "Breast Cancer", "Liver Disorders"])
@@ -258,12 +264,6 @@ Health diseases continue to be a major concern globally. By leveraging data mode
 """)
 
 st.write("Thank you for taking the time to view our work. Happy exploring! 🤓")
-
-# Dataset selection below the title
-dataset_choice = st.selectbox(
-    "Choose a dataset to explore:",
-    ["Select", "Heart Disease", "Chronic Kidney Disease", "Diabetes", "Breast Cancer", "Liver Disorders"]
-)
 
 # Dataset descriptions
 dataset_info = {
