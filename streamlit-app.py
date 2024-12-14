@@ -158,9 +158,49 @@ if uploaded_file_display is not None:
         st.write("### Uploaded Excel File for Display:")
         st.dataframe(data_display)
 
-# Import Data Section (For Download)
-st.sidebar.write("Import Data for Download (CSV or Excel)")
-uploaded_file_download = st.sidebar.file_uploader("Drag and drop file here", type=["csv", "xlsx"], help="Limit 200MB per file - CSV, XLSX", accept_multiple_files=False)
+# Custom CSS to set Times New Roman font for the entire app
+st.markdown("""
+    <style>
+        /* Set Times New Roman font for the entire app */
+        body {
+            font-family: 'Times New Roman', serif;
+        }
+
+        /* Set font for sidebar elements */
+        .sidebar .sidebar-content {
+            font-family: 'Times New Roman', serif;
+        }
+
+        /* Set font for the sidebar header */
+        .sidebar .sidebar-header {
+            font-family: 'Times New Roman', serif;
+            font-size: 20px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Unified File Upload Section
+st.sidebar.header("Upload Dataset File")
+
+# Section for Import Data for Display
+uploaded_file_display = st.sidebar.file_uploader("Import Data for Display (CSV or Excel)", type=["csv", "xlsx"], key="display")
+data_display = None
+
+if uploaded_file_display is not None:
+    # Process CSV files for display
+    if uploaded_file_display.name.endswith(".csv"):
+        data_display = pd.read_csv(uploaded_file_display)
+        st.write("### Uploaded CSV File for Display:")
+        st.dataframe(data_display)
+
+    # Process Excel files for display
+    elif uploaded_file_display.name.endswith(".xlsx"):
+        data_display = pd.read_excel(uploaded_file_display)
+        st.write("### Uploaded Excel File for Display:")
+        st.dataframe(data_display)
+
+# Section for Import Data for Download
+uploaded_file_download = st.sidebar.file_uploader("Import Data for Download (CSV or Excel)", type=["csv", "xlsx"], key="download")
 data_download = None
 
 if uploaded_file_download is not None:
