@@ -142,7 +142,7 @@ dataset_choice = st.selectbox(
 )
 
 #Sidebar 
-st.sidebar.selectbox("Dataset", ["Select", "Heart Disease", "Diabetes", "Breast Cancer", "Liver Disorders"])
+st.sidebar.header("App") 
 
 # Import Data Section (For Display)
 st.sidebar.header("Upload Dataset File")
@@ -249,9 +249,6 @@ if uploaded_file_download is not None:
 else:
     st.sidebar.write("Upload a file to enable display and download options.")
 
-
-# Sidebar
-st.sidebar.header("App") 
 
 # Main Content
 st.write("""
