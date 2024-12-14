@@ -43,6 +43,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Sidebar
+st.sidebar.header("App") 
+
 # Welcome Message 
 st.title("Health Disease Prediction🩺")
 
