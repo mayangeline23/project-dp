@@ -135,10 +135,76 @@ st.markdown("""
 # Streamlit App
 st.title("Health Disease Prediction🩺")
 
-# Welcome Message 
-st.title("Health Disease Prediction🩺")
+# Sidebar
+st.sidebar.header("App") 
+st.sidebar.selectbox("Dataset", ["Select", "Heart Disease", "Diabetes", "Breast Cancer", "Liver Disorders"])
 
-# Introduction
+# Import Data Section (For Display)
+st.sidebar.header("Upload Dataset File")
+st.sidebar.write("Import Data for Display (CSV or Excel)")
+uploaded_file_display = st.sidebar.file_uploader("Drag and drop file here", type=["csv", "xlsx"], help="Limit 200MB per file - CSV, XLSX", accept_multiple_files=False)
+data_display = None
+
+if uploaded_file_display is not None:
+    # Process CSV files for display
+    if uploaded_file_display.name.endswith(".csv"):
+        data_display = pd.read_csv(uploaded_file_display)
+        st.write("### Uploaded CSV File for Display:")
+        st.dataframe(data_display)
+
+    # Process Excel files for display
+    elif uploaded_file_display.name.endswith(".xlsx"):
+        data_display = pd.read_excel(uploaded_file_display)
+        st.write("### Uploaded Excel File for Display:")
+        st.dataframe(data_display)
+
+# Import Data Section (For Download)
+st.sidebar.write("Import Data for Download (CSV or Excel)")
+uploaded_file_download = st.sidebar.file_uploader("Drag and drop file here", type=["csv", "xlsx"], help="Limit 200MB per file - CSV, XLSX", accept_multiple_files=False)
+data_download = None
+
+if uploaded_file_download is not None:
+    # Process CSV files for download
+    if uploaded_file_download.name.endswith(".csv"):
+        data_download = pd.read_csv(uploaded_file_download)
+
+    # Process Excel files for download
+    elif uploaded_file_download.name.endswith(".xlsx"):
+        data_download = pd.read_excel(uploaded_file_download)
+
+    # Prepare CSV for download
+    csv_buffer = BytesIO()
+    data_download.to_csv(csv_buffer, index=False)
+    csv_bytes = csv_buffer.getvalue()
+
+    # Prepare Excel for download
+    excel_buffer = BytesIO()
+    with pd.ExcelWriter(excel_buffer, engine='xlsxwriter') as writer:
+        data_download.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_bytes = excel_buffer.getvalue()
+
+    st.sidebar.write("Download options for the uploaded file:")
+
+    # CSV download button
+    st.sidebar.download_button(
+        label="Download as CSV",
+        data=csv_bytes,
+        file_name="data.csv",
+        mime="text/csv",
+    )
+
+    # Excel download button
+    st.sidebar.download_button(
+        label="Download as Excel",
+        data=excel_bytes,
+        file_name="data.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
+
+else:
+    st.sidebar.write("Upload a file to enable display and download options.")
+
+# Main Content
 st.write("""
 This project focuses on **Health Disease**, showcasing our application of modeling and simulation techniques. 
 We've worked together to explore synthetic health data, perform statistical analysis, and develop predictive models to assess various health risks.
@@ -146,20 +212,12 @@ We've worked together to explore synthetic health data, perform statistical anal
 This project is the culmination of our group's dedication and effort for the **CSEC 413 Modeling and Simulation** course, and we're excited to share our work with you.
 """)
 
-# Why Health Disease Prediction
 st.write("""
 💡 **Why Health Disease Prediction?**  
 Health diseases continue to be a major concern globally. By leveraging data modeling and simulation, our aim is to provide insights that contribute to understanding and managing health risks effectively.
 """)
 
-# Thank you message
 st.write("Thank you for taking the time to view our work. Happy exploring! 🤓")
-
-# Dataset selection below the title
-dataset_choice = st.selectbox(
-    "Choose a dataset to explore:",
-    ["Select", "Heart Disease", "Diabetes", "Breast Cancer", "Liver Disorders"]
-)
 
 # Dataset descriptions
 dataset_info = {
